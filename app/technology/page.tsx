@@ -1,186 +1,221 @@
-"use client";
-import Image from 'next/image'
-import { useState } from "react";
+import { FC } from 'react';
+import Head from 'next/head';
+import Navbar from '@/components/ui/navbar';
+import Link from 'next/link';
 
-  const imageWrapperStyle = {
-    border: '1px solid white',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)', // subtle transparent background
-    borderRadius: 4,
-    padding: 16,
-  };
-const navigation = [
-  { name: "Home", href: "/home" },
-  { name: "Technology", href: "/technology" },
-  { name: "Research", href: "/research" },
-];
+const imageWrapperStyle = {
+  backgroundColor: 'rgba(65, 52, 52, 0.05)', // subtle transparent background
+  borderRadius: 20,
+  padding: 16,
+  borderTop: '1px solid rgba(255, 255, 255, 0.2)', // border-t (top border with white opacity)
+  borderBottom: '1px solid rgba(255, 255, 255, 0.05)', // border-b (bottom border with lighter opacity)
+};
+
 
 export default function Example() {
-  const navigation = [
-    { name: "Home", href: "/home" },
-    { name: "Technology", href: "/technology" },
-    { name: "Research", href: "/research" },
-  ];
-
-
   return (
-    <div className="bg-grey">
-<header className="absolute inset-x-0 top-0 z-50">
-  <nav
-    aria-label="Global"
-    className="relative flex items-center justify-between p-6 lg:px-8"
-  >
-    {/* Logo on the left */}
-    <div className="flex">
-      <a href="/home">
-        <img
-          src="/Brain.png"
-          alt="F1 Logo"
-          className="h-12 w-15"
-        />
-      </a>
-    </div>
+    <>
+     <Navbar />
+     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-20">
+      <section className='mt-40 mb-20'>
+        <h2 className='text-5xl'>Project Overview</h2>
+        <p className='mt-4 mb-4'>This project focuses on the detection of brain tumors using MRI images.
+          This deep learning model detects <strong className='text-[#00be77]'>brain tumors</strong> from MRI images using a
+          <strong className='text-[#00be77]'> Convolutional Neural Network (CNN)</strong>. The system classifies MRI scans into two categories:
+        </p>
+        <ul>
+          <li><strong>0 → Normal Brain</strong></li>
+          <li><strong>1 → Tumor Detected</strong></li>
+        </ul>
+      </section>
 
-    {/* Nav links perfectly centered */}
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-x-12">
-      {navigation.map((item) => (
-        <a
-          key={item.name}
-          href={item.href}
-          className="text-sm font-semibold text-white-900"
-        >
-          {item.name}
-        </a>
-      ))}
-    </div>
+      <div className="glowing-line"></div>
 
-    {/* Optional Log in on the right */}
-    <div className="flex">
-      <a href="#" className="text-sm font-semibold text-white-900">
-        Log in <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </nav>
-</header>
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-        >
-          <div
-            style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-            }}
-            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-          />
-        </div>
-        <div className="mx-auto max-w-2xl pb-32 lg:py-20">
-          <div className="text-center">
-            <h1 className="text-5xl font-semibold tracking-tight text-balance text-white-900 sm:text-7xl">
-            How It Works
-            </h1>
-            <p className="mt-8 text-lg font-normal text-pretty text-gray-200 sm:text">
-            The model uses Convolutional Neural Networks (CNNs) to extract features from brain MRI images and classify them as either Normal or Tumor based on the patterns it learned during training. After preprocessing the images (resizing, normalization), the model processes them through a series of convolutional and dense layers, and then makes predictions about whether the brain image contains a tumor or not.
-            </p>
-            </div>
-        </div>
-        <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 20,
-        alignItems: 'center',
-      }}
-    >
-      {/* Row 1 - Two side-by-side images */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: 20,
-        }}
-      >
-        <div style={imageWrapperStyle}>
-          <Image
-            src="/normal_cell_sample.png"
-            width={300}
-            height={300}
-            alt="Normal Cell"
-          />
-        </div>
-        <div style={imageWrapperStyle}>
-          <Image
-            src="/tumor_cell_sample.png"
-            width={300}
-            height={300}
-            alt="Tumor Cell"
-          />
-        </div>
-      </div>
+      <section className="mt-20 mb-20">
+  <h2 className="font-regular text-5xl mb-4">Dataset Summary</h2>
+  <p>
+    <strong>Total Images:</strong>{' '}
+    <span className="text-[#00be77] ">253</span>
+  </p>
+  <ul className="mt-2 ml-5 list-disc text-white">
+    <li>
+      <strong>Tumor Images:</strong>{' '}
+      <span className="text-[#00be77] ">155</span>
+    </li>
+    <li>
+      <strong>Normal Images:</strong>{' '}
+      <span className="text-[#00be77] ">98</span>
+    </li>
+  </ul>
+  <p className="mt-4 mb-4 text-white">
+    Images were preprocessed by resizing to{' '}
+    <strong className="text-[#00be77]">128x128</strong>, converting to{' '}
+    <strong className="text-[#00be77]">RGB</strong>, and normalizing pixel values.
+  </p>
+</section>
 
-      {/* Row 2 - Centered single image */}
-      <div style={imageWrapperStyle}>
-        <Image
-          src="/class_distribution.png"
-          width={600}
-          height={300}
-          alt="Class Distribution"
-        />
-      </div>
 
-      {/* Row 3 - Centered single image */}
-      <div style={imageWrapperStyle}>
-        <Image
-          src="/learning_curves.png"
-          width={600}
-          height={300}
-          alt="Learning Curves"
-        />
-      </div>
-    </div>
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-        >
-          <div
-            style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-            }}
-            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-          />
+      <div className="glowing-line"></div>
 
-        </div>
+      <section className="mt-20 mb-20 rounded-xl text-white shadow-lg">
+  <h2 className="text-5xl font-regular">Model Architecture</h2>
+  <p className="mt-4 mb-4 text-gray-300">
+    The model is a Convolutional Neural Network (CNN) with the following structure:
+  </p>
 
-      </div>
-      <footer className="mt-20 bg-blue-10 border-t">
-  <div className="mx-auto w-full max-w-screen-xl p-5 py-6 lg:py-8">
-    <div className="md:flex md:justify-between">
-      <div className="mb-6 md:mb-0">
-        <a className="flex items-center">
-          <img src="/Brain.png" className="h-11 w-14 me-3" alt="F1 Logo" />
-        </a>
-      </div>
-    </div>
-    <hr className="my-6 border-white-100 sm:mx-auto lg:my-8" />
-    <div className="sm:flex sm:items-center sm:justify-between">
-      <span className="text-sm sm:text-center text-gray-400">
-        © 2025 {" "}
-        <a href="https://flowbite.com/" className="hover:underline">
-          Brain Tumor Detection
-        </a>
-        . All Rights Reserved.
-      </span>
-    </div>
+  <div className="overflow-x-auto">
+    <table className="w-full rounded-xl overflow-hidden">
+      <thead>
+        <tr className="bg-[#00be77] text-[#0a0b0e]">
+          <th className="px-6 py-2 text-left">Layer Type</th>
+          <th className="px-4 py-3 text-left">Details</th>
+        </tr>
+      </thead>
+      <tbody className='bg-gradient-to-tr from-[#0c0e14] via-[#0f1218] to-[#13171e] '>
+        <tr className="">
+          <td className="px-6 py-4">Conv2D</td>
+          <td className="px-6 py-4">64 filters, 3×3 kernel, ReLU</td>
+        </tr>
+        <tr className="">
+          <td className="px-6 py-4">MaxPooling2D</td>
+          <td className="px-6 py-4">2×2 pool</td>
+        </tr>
+        <tr className="">
+          <td className="px-6 py-4">Flatten</td>
+          <td className="px-6 py-4">Converts 2D to 1D</td>
+        </tr>
+        <tr className="">
+          <td className="px-6 py-4">Dense</td>
+          <td className="px-6 py-4">128 neurons, ReLU</td>
+        </tr>
+        <tr className="">
+          <td className="px-6 py-4">Output Dense</td>
+          <td className="px-6 py-4">2 neurons, Sigmoid activation</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-</footer>
-    </div>
 
+  <p className="mt-6 mb-2 text-gray-300">
+    <strong>Loss Function:</strong>{' '}
+    <span className="text-[#00be77]">sparse_categorical_crossentropy</span>
+  </p>
+  <p className="text-gray-300">
+    <strong>Optimizer:</strong>{' '}
+    <span className="text-[#00be77]">Adam</span>
+  </p>
+</section>
+
+
+      <div className="glowing-line"></div>
+
+      <section className="mt-20 mb-20">
+  <h2 className="text-5xl mb-6 ">Training Details</h2>
+  <ul className="mt-4 mb-4 space-y-2 ">
+    <li>
+      <strong>Epochs:</strong>{' '}
+      <span className="text-[#00be77] font-medium">50</span>
+    </li>
+    <li>
+      <strong>Train/Test Split:</strong>{' '}
+      <span className="text-[#00be77] font-medium">80/20</span>
+    </li>
+    <li>
+      <strong>Validation Split:</strong>{' '}
+      <span className="text-[#00be77] font-medium">10% (within training)</span>
+    </li>
+    <li>
+      <strong>Final Test Accuracy:</strong>{' '}
+      <span className="text-[#00be77] font-medium">~86%</span>
+    </li>
+  </ul>
+</section>
+
+      <div className="glowing-line"></div>
+
+      <section className='mt-20 mb-20'>
+        <h2 className='text-5xl'>Results & Visualizations</h2>
+        <h3 className='mt-6 mb-6 text-center text-2xl font-medium'>Sample Images</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
+          <div>
+            <img
+              src="/normal_cell_sample.png" // Replace with the actual path
+              alt="Normal Brain"
+              style={imageWrapperStyle}
+            />
+          </div>
+          <div>
+            <img
+              src="/tumor_cell_sample.png" // Replace with the actual path
+              alt="Tumor Brain"
+              style={imageWrapperStyle}
+            />
+          </div>
+        </div>
+
+        <h3 className='mt-6 mb-6 text-center text-2xl font-medium'>Model Performance</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <div>            
+            <img
+              src="/learning_curves.png" // Replace with the actual path
+              alt="Accuracy Curve"
+              style={imageWrapperStyle}
+            />
+          </div>
+        </div>
+      </section>
+
+      <div className="glowing-line"></div>
+
+      <section className='mt-20 mb-20'>
+        <h2 className='text-5xl'> Conclusion</h2>
+        <p className='mt-4 mb-4'>
+          This CNN-based solution provides an effective approach for early brain tumor detection using MRI scans. With an
+          86% accuracy, it can serve as a foundation for integration into clinical decision support systems or mobile
+          diagnostic tools.
+        </p>
+      </section>
+
+      </main>
+      <footer className="mt-20 w-full z-50 top-0 border-t border-white/20 text-white py-8">
+            <div className="max-w-screen-xl mx-auto px-4">
+              {/* Footer content */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                {/* Company Info */}
+                <div>
+                  <Link href="/#main" className="text-5xl font-bold text-white">
+                    br<span className="text-[#00be77]">AI</span>n.
+                  </Link>
+                  <p className="text-sm text-zinc-400 mt-2">
+                    brAIn is a cutting-edge AI-powered tool for quick and accurate brain tumor detection. We provide fast results and peace of mind with each scan.
+                  </p>
+                </div>
+
+                {/* Empty space for better alignment */}
+                <div className="hidden lg:block"></div>
+
+                {/* Useful Links (Moved to the right) */}
+                <div className="lg:text-right">
+                  <h3 className="text-xl font-semibold mb-4">Useful Links</h3>
+                  <ul className="text-sm text-zinc-400 space-y-2">
+                    <li><a href="#features" className="hover:text-[#00be77]">Features</a></li>
+                    <li><a href="#solutions" className="hover:text-[#00be77]">What We Offer</a></li>
+                    <li><a href="#pricing" className="hover:text-[#00be77]">Pricing</a></li>
+                    <li><a href="/technology  " className="hover:text-[#00be77]">Model</a></li>
+                  </ul>
+                </div>
+
+              </div>
+
+              {/* Footer Bottom */}
+              <div className="mt-8 border-t border-gray-600/20 pt-6 text-center">
+                <p className="text-sm text-zinc-400">&copy; 2025 brAIn. All rights reserved.</p>
+              </div>
+            </div>
+          </footer>
+    </>
   );
-}
-
-
-
-
+};
 
 

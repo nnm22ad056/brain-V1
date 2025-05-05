@@ -1,131 +1,567 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { motion } from 'framer-motion';
+import Navbar from '@/components/ui/navbar';
+// import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { useState } from 'react';
+import { CheckIcon } from '@heroicons/react/20/solid'
+import Link from 'next/link';
+import {Popover, PopoverTrigger, PopoverContent, Button} from "@heroui/react";
 
-const navigation = [
-  { name: "Home", href: "/home" },
-  { name: "Technology", href: "/technology" },
-  { name: "Research", href: "/research" },
+const features = [
+  {
+    title: "Quick Diagnosis",
+    description: "Provides fast, real-time predictions, reducing wait times for users.",
+    image: '/Fast.png',
+  },
+  {
+    title: "High Accuracy",
+    description: "Trained on a large dataset for reliable and precise results in detecting tumors.",
+    image: '/Time.png',
+  },
+  {
+    title: "Easy to Use",
+    description: "Simple interface for uploading MRI images and getting instant feedback.",
+    image: '/Cursor.png',
+  },
+  {
+    title: "Cost-Effective",
+    description: "Reduces the need for expensive diagnostic equipment or manual analysis.",
+    image: '/Money.png',
+  },
+  {
+    title: "Accessible Anywhere",
+    description: "Available online, allowing anyone with an internet connection to use it.",
+    image: '/Net.png',
+  },
+  {
+    title: "Educational Tool",
+    description: "A great resource for students and researchers to understand AI-based tumor detection.",
+    image: '/Book.png',
+  },
 ];
 
-export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const plans = [
+  {
+    name: 'Free',
+    price: 0,
+    billing: 'Forever',
+    description: 'Perfect for small teams and startups',
+    cta: 'Sign Up Now',
+    features: [
+      '3 scans/month',
+      'Basic tumor detection',
+      'Unlimited projects and tasks',
+      'Access to sample cases for learning',
+      'Encrypted upload for privacy',
+    ],
+  },
+  {
+    name: 'Pro',
+    price: 16,
+    billing: 'per month',
+    description: 'Advanced tools for growing teams.',
+    cta: 'Request Pro Plan',
+    features: [
+      'All Free plan features, plus',
+      '50 scans/month',
+      'Advanced tumor detection',
+      'Tumor region highlighting',
+      'Downloadable reports',
+      'Priority email support',
+    ],
+  },
+  {
+    name: 'Team',
+    price: 42,
+    billing: 'per month',
+    description: 'Complete collaboration for larger teams.',
+    cta: 'Request Team Plan',
+    features: [
+      'All Pro plan features, plus',
+      'Unlimited scans',
+      'Full AI analytics suite',
+      'API & system Integration',
+      'Team collaboration tools',
+      'Dedicated support & onboarding',
+    ],
+  },
+];
 
+
+
+export default function Home() {
+  const [isAnnual, setIsAnnual] = useState(true);
   return (
-    <div className="bg-grey-400">
-<header className="absolute inset-x-0 top-0 z-50">
-  <nav
-    aria-label="Global"
-    className="relative flex items-center justify-between p-6 lg:px-8"
-  >
-    {/* Logo on the left */}
-    <div className="flex">
-      <a href="/home">
-        <img
-          src="/Brain.png"
-          alt="F1 Logo"
-          className="h-12 w-15"
-        />
-      </a>
-    </div>
-
-    {/* Nav links perfectly centered */}
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-x-12">
-      {navigation.map((item) => (
-        <a
-          key={item.name}
-          href={item.href}
-          className="text-sm font-semibold text-white-900"
-        >
-          {item.name}
-        </a>
-      ))}
-    </div>
-
-    {/* Optional Log in on the right */}
-    <div className="flex">
-      <a href="#" className="text-sm font-semibold text-white-900">
-        Log in <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </nav>
-</header>
-
-
-
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-        >
-          <div
+    <>
+ <Navbar />
+      <motion.div // Ensures a new animation is triggered when navigating to a different page
+        initial={{ opacity: 0 }}  // Initial state (before the page loads)
+        animate={{ opacity: 1 }}  // Final state (after the page loads)
+        exit={{ opacity: 0 }}  // State when leaving the page
+        transition={{ duration: 0.5 }}  // Duration of the transition
+      >
+        <main className="text-white scroll-smooth">
+          <section id="main"
             style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+              backgroundImage: "url('/Brain.png')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
             }}
-            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-          />
-        </div>
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="text-center">
-            <h1 className="text-5xl font-semibold tracking-tight text-balance text-white-900 sm:text-7xl">
-            AI-Powered Brain Tumor Detection
-            </h1>
-            <p className="mt-8 text-lg font-medium text-pretty text-white-500 sm:text-xl/8">
-            Fast, accurate diagnosis using deep learning models trained on MRI data.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="/technology"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="fade-mask flex flex-col items-center justify-center mb-25 text-center px-4 min-h-screen"
+          >
+            <img
+              src='/GlowBrain.png'
+              alt="Glowing Brain"
+              className="absolute top-[Xpx] left-[Ypx] w-[Widthpx] h-[Heightpx] z-10 pointer-events-none glow"
+            />
+            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent to-[#0a0b0e] z-0 pointer-events-none" />
+            {/* Heading */}
+            <motion.h1
+              style={{ marginTop: '-250px' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="text-6xl font-bold leading-tight"
+            >
+              Detect Brain Tumors In<br /> Seconds With brAIn
+            </motion.h1>
+
+            {/* Paragraph */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="mt-4 text-md max-w-xl mx-auto text-white"
+            >
+              Your smart MRI companion. Fast results, AI-powered insights,<br />
+              and peace of mind—all in one scan.
+            </motion.p>
+
+            {/* Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="flex gap-4 mt-8"
+            >
+              {/* Model Button */}
+              <Link href="/technology" className="cursor-pointer">
+                <button
+                  className="cursor-pointer bg-gradient-to-tr from-[#0c0e14] via-[#0f1218] to-[#13171e] border-t border-b border-white/20 border-b-white/5 text-zinc-400 text-md font-medium px-8 py-2 rounded-xl shadow-md transition duration-200 hover:text-white"
+                >
+                  View Model
+                </button>
+              </Link>
+
+              {/* Scan Button */}
+              <Link href="/scan" className="cursor-pointer">
+              <button
+                className="cursor-pointer bg-gradient-to-tl from-[#00be77] via-[#027b4f] to-[#003c28] font-medium text-emerald-950 px-8 py-2 rounded-xl border-t border-b border-white/10 overflow-hidden transition duration-200 hover:text-white hover:shadow-[0_0_12px_4px_rgba(1,123,79,0.4)]"
               >
-                See the Tech
-              </a>
-              <a href="/research" className="text-sm/6 font-semibold text-white-900">
-              Try the Demo <span aria-hidden="true">→</span>
-              </a>
+                Scan Now
+              </button>
+              </Link>
+            </motion.div>
+          </section>
+
+          {/* Features Section */}
+          <section id="features" className="mb-42">
+            <div className="flex justify-center mb-4">
+              <div className="inline-flex items-center justify-center px-6 py-1 rounded-[2rem] bg-[linear-gradient(to_right,rgba(0,60,40,0.4),rgba(2,123,79,0.6),rgba(0,60,40,0.4))] backdrop-blur-md border-t border-b border-white/20 border-b-white/5 shadow-inner text-center">
+                <span className="text-transparent text-white font-regular drop-shadow-[0_0_4px_rgba(2,123,79,0.5)]">
+                  Features
+                </span>
+              </div>
             </div>
+
+            <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+              <img className="w-full border-t border-b border-white/20 border-b-white/5 shadow-inner rounded-4xl" src='/F1.png' />
+              <div className="mt-4 md:mt-0">
+                <h2 className="text-5xl font-regular mb-4">Image Preview & Prediction</h2>
+                <p className="text-neutral-400 mb-6 font-regular">
+                  Users can easily upload an MRI image and instantly receive a prediction result displayed alongside a live preview of the uploaded image. Once the image is selected, the system processes it in real time and provides a clear outcome—such as “Normal” or “Tumor”—within seconds.
+                </p>
+              </div>
+            </div>
+
+            <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+              <div className="mt-4 md:mt-0">
+                <h2 className="text-5xl font-regular mb-4">Confidence Score</h2>
+                <p className="text-neutral-400 mb-6 font-regular">
+                Our model delivers an impressive 86% accuracy rate, ensuring reliable and precise predictions. With continuous optimization and advanced training, we are committed to further enhancing its performance, providing even more accurate and actionable insights as it evolves.
+                </p>
+              </div>
+              <img className="w-full border-t border-b border-white/20 border-b-white/5 shadow-inner rounded-4xl" src='/F2.png' />
+            </div>
+          </section>
+
+
+          <div className="glowing-line"></div>
+
+          {/* Offer */}
+
+          <section id="solutions" className="py-20 px-6 mt-6 mb-22">
+            {/* Label Tag */}
+            <div className="flex justify-center mb-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center justify-center px-6 py-1 rounded-[2rem] bg-[linear-gradient(to_right,rgba(0,60,40,0.4),rgba(2,123,79,0.6),rgba(0,60,40,0.4))] backdrop-blur-md border-t border-b border-white/20 border-b-white/5 shadow-inner text-center"
+              >
+                <span className="text-transparent text-white font-regular drop-shadow-[0_0_4px_rgba(2,123,79,0.5)]">
+                  What We Offer
+                </span>
+              </motion.div>
+            </div>
+
+            {/* Title + Subtitle */}
+            <div className="max-w-6xl mx-auto text-center">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="text-5xl font-regular mb-4 text-white"
+              >
+                Your Perfect Diagnosis, One Scan at a Time
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="mb-10 text-neutral-400"
+              >
+                brAIn offers quick, accurate tumor detection with an easy-to-use interface. <br />
+                Accessible online, it’s an affordable, reliable tool for both professionals and students.
+              </motion.p>
+
+              {/* Feature Cards */}
+              <div className="container mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                  {features.map((feature, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 5, scale: 0.90 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        duration: 0.2,
+                        delay: i * 0.10,
+                        ease: [0.25, 1, 0.25, 1]
+                      }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      className="relative w-full bg-gradient-to-tr from-[#0c0e14] via-[#0f1218] to-[#13171e] pb-8 pt-6 px-12 rounded-xl shadow hover:shadow-lg transition-all duration-300 border-t border-b border-white/20 border-b-white/5"
+                    >
+                      {/* Optional GlowingEffect */}
+                      {/* <GlowingEffect
+                        spread={50}
+                        glow={true}
+                        disabled={false}
+                        proximity={100}
+                        inactiveZone={0.06}
+                      /> */}
+
+                      {/* Image */}
+                      <div className="flex justify-center items-center w-full">
+                        <img
+                          src={feature.image}
+                          className="w-15 h-15 mb-2 object-contain"
+                          alt={feature.title}
+                        />
+                      </div>
+
+                      {/* Title + Description */}
+                      <h4 className="font-semibold text-lg text-white mb-2 text-center">
+                        {feature.title}
+                      </h4>
+                      <p className="text-neutral-300 text-center text-xs">
+                        {feature.description}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div className="glowing-line"></div>
+
+          {/* Pricing Plan */}
+
+          <section id="pricing" className="py-16 px-6 text-white mt-12">
+            <div className="flex justify-center mb-4">
+              <div className="inline-flex items-center justify-center px-6 py-1 rounded-[2rem] bg-[linear-gradient(to_right,rgba(0,60,40,0.4),rgba(2,123,79,0.6),rgba(0,60,40,0.4))] backdrop-blur-md border-t border-b border-white/20 border-b-white/5 shadow-inner text-center">
+                <span className="text-transparent text-white font-regular drop-shadow-[0_0_4px_rgba(2,123,79,0.5)]">
+                  Pricing
+                </span>
+              </div>
+            </div>
+            <div className="max-w-5xl mx-auto text-center">
+              <h2 className="text-5xl font-regular mb-2">Choose the Perfect<br />Plan for Your Diagnosis</h2>
+              <p className="text-neutral-400 mb-6 font-medium">
+                brAIn offers the perfect solution for professionals and students alike.
+
+
+              </p>
+
+              <div className="mb-10 flex justify-center items-center">
+                <div className="flex items-center space-x-4 pl-2 pr-4 py-2 rounded-4xl bg-gradient-to-r from-[#0c0e14] via-[#0f1218] to-[#13171e]/5 backdrop-blur-sm border-t border-b border-white/20 border-b-white/5 shadow-inner">
+                  {/* Monthly Radio Button */}
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="billingCycle"
+                      checked={!isAnnual}
+                      onChange={() => setIsAnnual(false)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-8 h-8 flex items-center justify-center rounded-full border border-white/40 transition-all duration-300">
+                      <div
+                        className={`w-4 h-4 rounded-full transition-all duration-300 ${!isAnnual
+                          ? 'bg-[#00be77] shadow-[0_0_6px_3px_rgba(1,123,79,0.9)]'
+                          : 'bg-transparent'
+                          }`}
+                      />
+                    </div>
+                    <span className={`ml-2 text-sm ${!isAnnual ? 'text-white font-semibold' : 'text-white/60'}`}>
+                      Monthly
+                    </span>
+                  </label>
+                  {/* Annually Radio Button */}
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="billingCycle"
+                      checked={isAnnual}
+                      onChange={() => setIsAnnual(true)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-8 h-8 flex items-center justify-center rounded-full border border-white/40 transition-all duration-300">
+                      <div
+                        className={`w-4 h-4 rounded-full transition-all duration-300 ${isAnnual
+                          ? 'bg-[#00be77] shadow-[0_0_6px_3px_rgba(1,123,79,0.9)]'
+                          : 'bg-transparent'
+                          }`}
+                      />
+                    </div>
+                    <span className={`ml-2 text-sm ${isAnnual ? 'text-white font-semibold' : 'text-white/60'}`}>
+                      Annually{' '}
+                      <span
+                        className={`ml-1  ${isAnnual
+                          ? 'text-[#00be77] drop-shadow-[0_0_6px_rgba(34,197,94,0.6)]'
+                          : 'text-white/40'
+                          }`}
+                      >
+                        Save 15%
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                  {
+                    name: 'Free',
+                    price: 0,
+                    billing: 'Forever',
+                    cta: 'Sign Up Now',
+                    features: [
+                      '3 scans/month',
+                      'Basic tumor detection',
+                      'Unlimited projects and tasks',
+                      'Access to sample cases for learning',
+                      'Encrypted upload for privacy',
+                    ],
+                    preFeatureText: 'Free Plan includes',
+                    extraText: 'For students and first-time users.',
+                  },
+                  {
+                    name: 'Pro',
+                    price: 16,
+                    billing: 'per month',
+                    cta: 'Request Pro Plan',
+                    features: [
+                      '50 scans/month',
+                      'Advanced tumor detection',
+                      'Tumor region highlighting',
+                      'Downloadable reports',
+                      'Priority email support',
+                    ],
+                    preFeatureText: 'All Free plan features, plus',
+                    extraText: 'For medical professionals and researchers.',
+                    bgColor: 'bg-gradient-to-t from-[#00be77] via-[#027b4f] to-[#003c28]',
+                    isGlowing: true,
+                    glowEffect: 'animate-pulse',
+                    borderColor: 'border-2 border-white',
+                  },
+                  {
+                    name: 'Team',
+                    price: 42,
+                    billing: 'per month',
+                    cta: 'Request Team Plan',
+                    features: [
+                      'Unlimited scans',
+                      'Full AI analytics suite',
+                      'API & system Integration',
+                      'Team collaboration tools',
+                      'Dedicated support & onboarding',
+                    ],
+                    preFeatureText: 'All Pro plan features, plus',
+                    extraText: 'For clinics & institutions.',
+                  },
+                ].map((plan) => {
+                  const calculatedPrice =
+                    plan.price === 0
+                      ? '$0'
+                      : `$${isAnnual ? Math.round(plan.price * 12 * 0.85) : plan.price}`;
+
+                  const billingText = isAnnual ? 'Billed annually' : 'Billed monthly';
+
+                  return (
+                    <div
+                      key={plan.name}
+                      className={`${plan.bgColor ? plan.bgColor : 'bg-gradient-to-tr from-[#0c0e14] via-[#0f1218] to-[#13171e]'
+                        } ${plan.isGlowing ? 'shadow-[0_0_60px_rgba(1,123,79,0.9)]' : ''
+                        } ${plan.name === 'Pro' ? ' border-t border-b border-white/40 border-b-white/20' : ' border-t border-b border-white/20 border-b-white/5'
+                        } rounded-2xl shadow p-6 flex flex-col justify-between`}
+                    >
+                      <div>
+                        <h3 className={`text-xl font-semibold mb-1 text-left ${plan.name === 'Pro' ? 'text-emerald-100' : 'text-zinc-400'}`}>
+                          {plan.name}
+                        </h3>
+
+                        <div className={`text-5xl mt-2 font-bold mb-2 text-left ${plan.name === 'Pro' ? 'text-white' : ''}`}>
+                          {calculatedPrice} <span className="text-sm font-normal">{isAnnual ? 'per year' : 'per month'}</span>
+                        </div>
+                      </div>
+
+                      {/* New line below the price */}
+                      <p className={`text-sm font-medium mb-4 text-left ${plan.name === 'Pro' ? 'text-emerald-100' : 'text-zinc-400'}`}>
+                        {plan.extraText}
+                      </p>
+
+                        {/* CTA Button */}
+                        {plan.name === 'Pro' || plan.name === 'Team' ? (
+  <Popover
+    showArrow
+    backdrop="opaque"
+    classNames={{
+      base: ["before:bg-default-200"],
+      content: [
+        "rounded-2xl py-3 px-4 border-t border-b border-white/20 border-b-white/5 bg-gradient-to-tr from-[#0c0e14] via-[#0f1218] to-[#13171e]",
+      ],
+    }}
+    placement="bottom"
+  >
+    <PopoverTrigger>
+      <a
+        className="inline-block mb-2 bg-white text-[#0f1218] text-md font-medium py-2 px-4 rounded-xl shadow-md transition duration-300 hover:shadow-[0_0_12px_rgba(255,255,255,0.5)]"
+      >
+        {plan.cta}
+      </a>
+    </PopoverTrigger>
+    <PopoverContent>
+      {(titleProps) => (
+        <div className="px-1 py-2 ">
+          <h3 className="text-small font-bold text-white" {...titleProps}>
+            {plan.name} Trial Info
+          </h3>
+          <div className="text-tiny text-white">
+            {plan.name === 'Pro'
+              ? 'Want Pro plan? Reach out to [your email address] for more info!'
+              : 'Want Teams plan? Reach out to [your email address] for more info!'}
           </div>
         </div>
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-        >
-          <div
-            style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-            }}
-            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-          />
-          
-        </div>
-        
-      </div>
-      <footer className="bg-blue-10 border-t">
-  <div className="mx-auto w-full max-w-screen-xl p-5 py-6 lg:py-8">
-    <div className="md:flex md:justify-between">
-      <div className="mb-6 md:mb-0">
-        <a className="flex items-center">
-          <img src="/Brain.png" className="h-11 w-14 me-3" alt="F1 Logo" />
-        </a>
-      </div>
-    </div>
-    <hr className="my-6 border-white-100 sm:mx-auto lg:my-8" />
-    <div className="sm:flex sm:items-center sm:justify-between">
-      <span className="text-sm sm:text-center text-gray-400">
-        © 2025 {" "}
-        <a href="https://flowbite.com/" className="hover:underline">
-          Brain Tumor Detection
-        </a>
-        . All Rights Reserved.
-      </span>
-    </div>
-  </div>
-</footer>
+      )}
+    </PopoverContent>
+  </Popover>
+) : (
+  <a
+    href="/signup"
+    className="inline-block mb-2 bg-white text-[#0f1218] text-md font-medium py-2 px-4 rounded-xl shadow-md transition duration-300 hover:shadow-[0_0_12px_rgba(255,255,255,0.5)]"
+  >
+    {plan.cta}
+  </a>
+)}
 
-    </div>
+
+                      <div className="text-sm font-semibold text-white/50 mb-6">{billingText}</div>
+
+                      {/* Line division below the button */}
+                      <hr className="border-t border-[0.5px] border-white/25 mb-4" />
+
+                      {/* Pre-feature text */}
+                      <p className={`text-md font-medium mb-4 text-left ${plan.name === 'Pro' ? 'text-white' : 'text-white'}`}>
+                        {plan.preFeatureText}
+                      </p>
+
+                      <ul className={`text-sm space-y-2 mb-6 text-left font-medium ${plan.name === 'Pro' ? 'text-emerald-100' : 'text-zinc-400'}`}>
+                        {plan.features.map((feature, i) => (
+                          <li key={i} className="flex gap-x-3">
+                            <CheckIcon
+                              aria-hidden="true"
+                              className={`h-5 w-5 ${plan.name === 'Pro' ? 'text-white' : 'text-gray-400'}`}
+                            />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+
+                    </div>
+                  );
+                })}
+              </div>
+
+            </div>
+          </section>
+          <footer className="mt-20 w-full z-50 top-0 border-t border-white/20 text-white py-8">
+            <div className="max-w-screen-xl mx-auto px-4">
+              {/* Footer content */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                {/* Company Info */}
+                <div>
+                  <Link href="/#main" className="text-5xl font-bold text-white">
+                    br<span className="text-[#00be77]">AI</span>n.
+                  </Link>
+                  <p className="text-sm text-zinc-400 mt-2">
+                    brAIn is a cutting-edge AI-powered tool for quick and accurate brain tumor detection. We provide fast results and peace of mind with each scan.
+                  </p>
+                </div>
+
+                {/* Empty space for better alignment */}
+                <div className="hidden lg:block"></div>
+
+                {/* Useful Links (Moved to the right) */}
+                <div className="lg:text-right">
+                  <h3 className="text-xl font-semibold mb-4">Useful Links</h3>
+                  <ul className="text-sm text-zinc-400 space-y-2">
+                    <li><a href="#features" className="hover:text-[#00be77]">Features</a></li>
+                    <li><a href="#solutions" className="hover:text-[#00be77]">What We Offer</a></li>
+                    <li><a href="#pricing" className="hover:text-[#00be77]">Pricing</a></li>
+                    <li><a href="/technology  " className="hover:text-[#00be77]">Model</a></li>
+                  </ul>
+                </div>
+
+              </div>
+
+              {/* Footer Bottom */}
+              <div className="mt-8 border-t border-gray-600/20 pt-6 text-center">
+                <p className="text-sm text-zinc-400">&copy; 2025 brAIn. All rights reserved.</p>
+              </div>
+            </div>
+          </footer>
+
+
+        </main>
+      </motion.div>
+    </>
   );
 }

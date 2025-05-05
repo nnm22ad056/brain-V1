@@ -1,8 +1,10 @@
 @import "tailwindcss";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #13171e;
 }
 
 @theme inline {
@@ -14,7 +16,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0a0b0e;
     --foreground: #ededed;
   }
 }
@@ -23,4 +25,28 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes glowing-line-animate {
+  0% {
+    width: 0%; /* Start from the center */
+  }
+  100% {
+    width: 60%; /* End at the desired width */
+  }
+}
+
+.glowing-line {
+  position: relative;
+  height: 2px;
+  width: 0%; /* Initial width at 0% */
+  background: #00be77;
+  box-shadow: 0 0 8px 2px rgba(0, 190, 119, 0.8);
+  margin: 2rem auto; /* Center the line horizontally */
+  border-radius: 9999px;
+  animation: glowing-line-animate 1s ease-out forwards; /* Animation applied */
+  
+  /* Fading mask from center */
+  mask-image: linear-gradient(to right, transparent, white 30%, white 70%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, white 30%, white 70%, transparent);
 }

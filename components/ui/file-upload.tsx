@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import React, { useRef, useState } from "react";
 import { motion } from "motion/react";
-import { IconUpload } from "@tabler/icons-react";
+import { IconUpload, IconTrash } from "@tabler/icons-react"; // Import trash icon for the delete button
 import { useDropzone } from "react-dropzone";
 
 const mainVariant = {
@@ -42,6 +42,11 @@ export const FileUpload = ({
     fileInputRef.current?.click();
   };
 
+  const handleDelete = (fileToDelete: File) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
+    onChange && onChange(files.filter((file) => file !== fileToDelete));
+  };
+
   const { getRootProps, isDragActive } = useDropzone({
     multiple: false,
     noClick: true,
@@ -65,14 +70,13 @@ export const FileUpload = ({
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />
-        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]"> 
-        </div>
+        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]"></div>
         <div className="flex flex-col items-center justify-center">
           <p className="relative z-20 font-sans font-bold dark:text-white text-6xl pb-2">
             Upload file
           </p>
           <p className="relative z-20 font-sans font-normal break-words max-w-md text-center text-neutral-100 dark:text-gray-200 text-lg mt-2">
-          Upload an MRI image to detect the presence of a brain tumor using our AI-powered model.
+            Upload an MRI image to detect the presence of a brain tumor using our AI-powered model.
           </p>
           <div className="relative w-full mt-10 max-w-xl mx-auto">
             {files.length > 0 &&
@@ -81,7 +85,7 @@ export const FileUpload = ({
                   key={"file" + idx}
                   layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
                   className={cn(
-                    "relative overflow-hidden z-40 bg-white dark:bg-neutral-900 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md",
+                    "relative overflow-hidden z-40 bg-[#13171e] border-t border-b border-white/20 border-b-white/5 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md",
                     "shadow-sm"
                   )}
                 >
@@ -94,14 +98,23 @@ export const FileUpload = ({
                     >
                       {file.name}
                     </motion.p>
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      layout
-                      className="rounded-lg px-2 py-1 w-fit shrink-0 text-sm text-neutral-600 dark:bg-neutral-800 dark:text-white shadow-input"
-                    >
-                      {(file.size / (1024 * 1024)).toFixed(2)} MB
-                    </motion.p>
+                    <div className="flex items-center gap-2">
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        layout
+                        className="rounded-lg px-2 py-1 w-fit shrink-0 text-sm text-neutral-600 dark:bg-neutral-800 dark:text-white shadow-input"
+                      >
+                        {(file.size / (1024 * 1024)).toFixed(2)} MB
+                      </motion.p>
+                      <motion.button
+                        onClick={() => handleDelete(file)}
+                        className="text-red-600 hover:text-red-800"
+                        aria-label="Delete file"
+                      >
+                        <IconTrash className="h-5 w-5" />
+                      </motion.button>
+                    </div>
                   </div>
 
                   <div className="flex text-sm md:flex-row flex-col items-start md:items-center w-full mt-2 justify-between text-neutral-600 dark:text-neutral-400">
@@ -166,5 +179,3 @@ export const FileUpload = ({
     </div>
   );
 };
-
-
