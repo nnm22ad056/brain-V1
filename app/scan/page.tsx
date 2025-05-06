@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { FileUpload } from "@/components/ui/file-upload";
 import Navbar from '@/components/ui/navbar';
 
-export default function FileUploadDemo() {
+
+export default function Scan() {
   const [files, setFiles] = useState<File[]>([]);
   const handleFileUpload = (files: File[]) => {
     setFiles(files);

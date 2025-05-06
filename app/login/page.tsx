@@ -5,11 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-  IconBrandOnlyfans,
-} from "@tabler/icons-react";
 
 export default function SignupFormDemo() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,7 +14,7 @@ export default function SignupFormDemo() {
 
   return (
     <>
-      <Navbar />
+<Navbar />
       <div className="flex min-h-screen flex-col items-center justify-center px-4">
       <h1 className="mb-6 text-5xl font-semibold text-neutral-800 dark:text-neutral-100">
       <Link href="/">

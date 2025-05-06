@@ -1,12 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import Navbar from '@/components/ui/navbar';
 // import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { useState } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link';
-import {Popover, PopoverTrigger, PopoverContent, Button} from "@heroui/react";
+import {Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
 
 const features = [
   {
@@ -90,17 +90,39 @@ const plans = [
 
 
 
+const animationConfiguration: Variants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+// Type for props (children)
+interface TransitionProps {
+  children: React.ReactNode; // Ensure children can be any valid React node
+}
+
+// Transitions component definition
+const Transitions: React.FC<TransitionProps> = ({ children }) => {
+  return (
+    <motion.div
+      variants={animationConfiguration}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 3 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 export default function Home() {
   const [isAnnual, setIsAnnual] = useState(true);
+
   return (
     <>
  <Navbar />
-      <motion.div // Ensures a new animation is triggered when navigating to a different page
-        initial={{ opacity: 0 }}  // Initial state (before the page loads)
-        animate={{ opacity: 1 }}  // Final state (after the page loads)
-        exit={{ opacity: 0 }}  // State when leaving the page
-        transition={{ duration: 0.5 }}  // Duration of the transition
-      >
+      <motion.div>
         <main className="text-white scroll-smooth">
           <section id="main"
             style={{
@@ -168,34 +190,55 @@ export default function Home() {
 
           {/* Features Section */}
           <section id="features" className="mb-42">
-            <div className="flex justify-center mb-4">
-              <div className="inline-flex items-center justify-center px-6 py-1 rounded-[2rem] bg-[linear-gradient(to_right,rgba(0,60,40,0.4),rgba(2,123,79,0.6),rgba(0,60,40,0.4))] backdrop-blur-md border-t border-b border-white/20 border-b-white/5 shadow-inner text-center">
-                <span className="text-transparent text-white font-regular drop-shadow-[0_0_4px_rgba(2,123,79,0.5)]">
-                  Features
-                </span>
-              </div>
-            </div>
+  {/* Title Badge */}
+  <div className="flex justify-center mb-4">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.2, duration: 0.6 }}
+      className="inline-flex items-center justify-center px-6 py-1 rounded-[2rem] bg-[linear-gradient(to_right,rgba(0,60,40,0.4),rgba(2,123,79,0.6),rgba(0,60,40,0.4))] backdrop-blur-md border-t border-b border-white/20 border-b-white/5 shadow-inner text-center"
+    >
+      <span className="text-transparent text-white font-regular drop-shadow-[0_0_4px_rgba(2,123,79,0.5)]">
+        Features
+      </span>
+    </motion.div>
+  </div>
 
-            <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
-              <img className="w-full border-t border-b border-white/20 border-b-white/5 shadow-inner rounded-4xl" src='/F1.png' />
-              <div className="mt-4 md:mt-0">
-                <h2 className="text-5xl font-regular mb-4">Image Preview & Prediction</h2>
-                <p className="text-neutral-400 mb-6 font-regular">
-                  Users can easily upload an MRI image and instantly receive a prediction result displayed alongside a live preview of the uploaded image. Once the image is selected, the system processes it in real time and provides a clear outcome—such as “Normal” or “Tumor”—within seconds.
-                </p>
-              </div>
-            </div>
+  {/* First Feature */}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: 0.4, duration: 0.6 }}
+    className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6"
+  >
+    <img className="w-full border-t border-b border-white/20 border-b-white/5 shadow-inner rounded-4xl" src='/F1.png' />
+    <div className="mt-4 md:mt-0">
+      <h2 className="text-5xl font-regular mb-4">Image Preview & Prediction</h2>
+      <p className="text-neutral-400 mb-6 font-regular">
+      Users can easily upload an MRI image and instantly receive a prediction result displayed alongside a live preview of the uploaded image. Once the image is selected, the system processes it in real time and provides a clear outcome—such as “Normal” or “Tumor”—within seconds.
+      </p>
+    </div>
+  </motion.div>
 
-            <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
-              <div className="mt-4 md:mt-0">
-                <h2 className="text-5xl font-regular mb-4">Confidence Score</h2>
-                <p className="text-neutral-400 mb-6 font-regular">
-                Our model delivers an impressive 86% accuracy rate, ensuring reliable and precise predictions. With continuous optimization and advanced training, we are committed to further enhancing its performance, providing even more accurate and actionable insights as it evolves.
-                </p>
-              </div>
-              <img className="w-full border-t border-b border-white/20 border-b-white/5 shadow-inner rounded-4xl" src='/F2.png' />
-            </div>
-          </section>
+  {/* Second Feature */}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: 0.6, duration: 0.6 }}
+    className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6"
+  >
+    <div className="mt-4 md:mt-0">
+      <h2 className="text-5xl font-regular mb-4">Confidence Score</h2>
+      <p className="text-neutral-400 mb-6 font-regular">
+      Our model delivers an impressive 86% accuracy rate, ensuring reliable and precise predictions. With continuous optimization and advanced training, we are committed to further enhancing its performance, providing even more accurate and actionable insights as it evolves.
+      </p>
+    </div>
+    <img className="w-full border-t border-b border-white/20 border-b-white/5 shadow-inner rounded-4xl" src='/F2.png' />
+  </motion.div>
+</section>
 
 
           <div className="glowing-line"></div>
@@ -203,92 +246,85 @@ export default function Home() {
           {/* Offer */}
 
           <section id="solutions" className="py-20 px-6 mt-6 mb-22">
-            {/* Label Tag */}
-            <div className="flex justify-center mb-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center justify-center px-6 py-1 rounded-[2rem] bg-[linear-gradient(to_right,rgba(0,60,40,0.4),rgba(2,123,79,0.6),rgba(0,60,40,0.4))] backdrop-blur-md border-t border-b border-white/20 border-b-white/5 shadow-inner text-center"
-              >
-                <span className="text-transparent text-white font-regular drop-shadow-[0_0_4px_rgba(2,123,79,0.5)]">
-                  What We Offer
-                </span>
-              </motion.div>
+  {/* Label Tag */}
+  <div className="flex justify-center mb-4">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="inline-flex items-center justify-center px-6 py-1 rounded-[2rem] bg-[linear-gradient(to_right,rgba(0,60,40,0.4),rgba(2,123,79,0.6),rgba(0,60,40,0.4))] backdrop-blur-md border-t border-b border-white/20 border-b-white/5 shadow-inner text-center"
+    >
+      <span className="text-transparent text-white font-regular drop-shadow-[0_0_4px_rgba(2,123,79,0.5)]">
+        What We Offer
+      </span>
+    </motion.div>
+  </div>
+
+  {/* Title + Subtitle */}
+  <div className="max-w-6xl mx-auto text-center">
+    <motion.h2
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="text-5xl font-regular mb-4 text-white"
+    >
+      Your Perfect Diagnosis, One Scan at a Time
+    </motion.h2>
+
+    <motion.p
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      viewport={{ once: true }}
+      className="mb-10 text-neutral-400"
+    >
+      brAIn offers quick, accurate tumor detection with an easy-to-use interface. <br />
+      Accessible online, it’s an affordable, reliable tool for both professionals and students.
+    </motion.p>
+
+    {/* Feature Cards */}
+    <div className="container mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {features.map((feature, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              duration: 0.4,
+              delay: 0.2 + i * 0.1,
+              ease: [0.25, 1, 0.25, 1]
+            }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="relative w-full bg-gradient-to-tr from-[#0c0e14] via-[#0f1218] to-[#13171e] pb-8 pt-6 px-12 rounded-xl shadow hover:shadow-lg transition-all duration-300 border-t border-b border-white/20 border-b-white/5"
+          >
+            {/* Optional Glow Effect Placeholder */}
+            {/* <GlowingEffect ... /> */}
+
+            {/* Image */}
+            <div className="flex justify-center items-center w-full">
+              <img
+                src={feature.image}
+                className="w-15 h-15 mb-2 object-contain"
+                alt={feature.title}
+              />
             </div>
 
-            {/* Title + Subtitle */}
-            <div className="max-w-6xl mx-auto text-center">
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="text-5xl font-regular mb-4 text-white"
-              >
-                Your Perfect Diagnosis, One Scan at a Time
-              </motion.h2>
-
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="mb-10 text-neutral-400"
-              >
-                brAIn offers quick, accurate tumor detection with an easy-to-use interface. <br />
-                Accessible online, it’s an affordable, reliable tool for both professionals and students.
-              </motion.p>
-
-              {/* Feature Cards */}
-              <div className="container mx-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-                  {features.map((feature, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 5, scale: 0.90 }}
-                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{
-                        duration: 0.2,
-                        delay: i * 0.10,
-                        ease: [0.25, 1, 0.25, 1]
-                      }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      className="relative w-full bg-gradient-to-tr from-[#0c0e14] via-[#0f1218] to-[#13171e] pb-8 pt-6 px-12 rounded-xl shadow hover:shadow-lg transition-all duration-300 border-t border-b border-white/20 border-b-white/5"
-                    >
-                      {/* Optional GlowingEffect */}
-                      {/* <GlowingEffect
-                        spread={50}
-                        glow={true}
-                        disabled={false}
-                        proximity={100}
-                        inactiveZone={0.06}
-                      /> */}
-
-                      {/* Image */}
-                      <div className="flex justify-center items-center w-full">
-                        <img
-                          src={feature.image}
-                          className="w-15 h-15 mb-2 object-contain"
-                          alt={feature.title}
-                        />
-                      </div>
-
-                      {/* Title + Description */}
-                      <h4 className="font-semibold text-lg text-white mb-2 text-center">
-                        {feature.title}
-                      </h4>
-                      <p className="text-neutral-300 text-center text-xs">
-                        {feature.description}
-                      </p>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
+            {/* Title + Description */}
+            <h4 className="font-semibold text-lg text-white mb-2 text-center">
+              {feature.title}
+            </h4>
+            <p className="text-neutral-300 text-center text-xs">
+              {feature.description}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
 
           <div className="glowing-line"></div>
 
